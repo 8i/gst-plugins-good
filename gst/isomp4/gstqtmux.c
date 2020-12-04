@@ -5149,6 +5149,7 @@ find_best_pad (GstQTMux * qtmux)
   if (qtmux->current_pad && (qtmux->interleave_bytes != 0
           || qtmux->interleave_time != 0) && (qtmux->interleave_bytes == 0
           || qtmux->current_chunk_size <= qtmux->interleave_bytes)
+
       && (qtmux->interleave_time == 0
           || qtmux->current_chunk_duration <= qtmux->interleave_time)
       && qtmux->mux_mode != GST_QT_MUX_MODE_FRAGMENTED
@@ -6747,11 +6748,7 @@ gst_qt_mux_set_property (GObject * object,
       qtmux->fragment_duration = g_value_get_uint (value);
       break;
     case PROP_STREAMABLE:{
-      GstQTMuxClass *qtmux_klass =
-          (GstQTMuxClass *) (G_OBJECT_GET_CLASS (qtmux));
-      if (qtmux_klass->format == GST_QT_MUX_FORMAT_ISML) {
-        qtmux->streamable = g_value_get_boolean (value);
-      }
+      qtmux->streamable = g_value_get_boolean (value);
       break;
     }
     case PROP_RESERVED_MAX_DURATION:
