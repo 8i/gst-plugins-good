@@ -3409,6 +3409,11 @@ gst_qt_mux_start_file (GstQTMux * qtmux)
       break;
     case GST_QT_MUX_MODE_FRAGMENTED:
     case GST_QT_MUX_MODE_FRAGMENTED_STREAMABLE:
+      GST_OBJECT_LOCK (qtmux);
+      qtmux->fast_start_file = g_fopen (qtmux->fast_start_file_path, "wb+");
+      if (!qtmux->fast_start_file)
+        goto open_failed;
+      GST_OBJECT_UNLOCK (qtmux);
       ret = gst_qt_mux_prepare_and_send_ftyp (qtmux);
       if (ret != GST_FLOW_OK)
         break;
@@ -3423,7 +3428,7 @@ gst_qt_mux_start_file (GstQTMux * qtmux)
       /* prepare moov and/or tags */
       gst_qt_mux_configure_moov (qtmux);
       gst_qt_mux_setup_metadata (qtmux);
-      ret = gst_qt_mux_send_moov (qtmux, &qtmux->header_size, 0, FALSE, FALSE);
+      ret = gst_qt_mux_send_moov (qtmux, &qtmux->header_size, 0, TRUE, TRUE);
       if (ret != GST_FLOW_OK)
         return ret;
       /* extra atoms */
@@ -4163,6 +4168,9 @@ init:
   }
 
   /* add buffer and metadata */
+  if (buf == NULL) {
+    return ret;
+  }
   atom_traf_add_samples (pad->traf, delta, size, sync, pts_offset,
       pad->sync && sync);
   GST_LOG_OBJECT (qtmux, "adding buffer %p to fragments", buf);
@@ -6472,6 +6480,11 @@ gst_qt_mux_sink_event (GstAggregator * agg, GstAggregatorPad * agg_pad,
       event = NULL;
       ret = TRUE;
       break;
+    }
+    case GST_EVENT_FLUSH_STOP:{
+      if (qtmux->state == GST_QT_MUX_STATE_EOS) {
+        qtmux->state = GST_QT_MUX_STATE_DATA;
+      }
     }
     default:
       break;
