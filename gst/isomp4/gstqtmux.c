@@ -1921,6 +1921,8 @@ gst_qt_mux_send_buffer (GstQTMux * qtmux, GstBuffer * buf, guint64 * offset,
       goto write_error;
     else
       res = GST_FLOW_OK;
+    if (fflush (qtmux->fast_start_file))
+      goto write_error;
   } else {
     GST_LOG_OBJECT (qtmux, "downstream");
     res = gst_aggregator_finish_buffer (GST_AGGREGATOR (qtmux), buf);
@@ -2127,7 +2129,7 @@ gst_qt_mux_send_ftyp (GstQTMux * qtmux, guint64 * off)
   buf = _gst_buffer_new_take_data (data, offset);
 
   GST_LOG_OBJECT (qtmux, "Pushing ftyp");
-  return gst_qt_mux_send_buffer (qtmux, buf, off, FALSE);
+  return gst_qt_mux_send_buffer (qtmux, buf, off, TRUE);
 
   /* ERRORS */
 serialize_error:
@@ -3723,13 +3725,13 @@ gst_qt_mux_stop_file (GstQTMux * qtmux)
   if ((ret = gst_qt_mux_send_last_buffers (qtmux)) != GST_FLOW_OK)
     return ret;
 
+  gst_qt_mux_update_global_statistics (qtmux);
+
   if (qtmux->mux_mode == GST_QT_MUX_MODE_FRAGMENTED_STREAMABLE) {
     /* Streamable mode; no need to write duration or MFRA */
     GST_DEBUG_OBJECT (qtmux, "streamable file; nothing to stop");
     return GST_FLOW_OK;
   }
-
-  gst_qt_mux_update_global_statistics (qtmux);
 
   GST_OBJECT_LOCK (qtmux);
   sinkpads = g_list_copy_deep (GST_ELEMENT_CAST (qtmux)->sinkpads,
@@ -4094,8 +4096,9 @@ gst_qt_mux_pad_fragment_add_buffer (GstQTMux * qtmux, GstQTMuxPad * pad,
 flush:
   /* flush pad fragment if threshold reached,
    * or at new keyframe if we should be minding those in the first place */
-  if (G_UNLIKELY (force || (sync && pad->sync) ||
+  if (G_UNLIKELY (force || (sync && pad->sync && pad->fragment_duration < 0) ||
           pad->fragment_duration < (gint64) delta)) {
+    AtomSIDX *sidx;
     AtomMOOF *moof;
     guint64 size = 0, offset = 0;
     guint8 *data = NULL;
@@ -4105,6 +4108,12 @@ flush:
     /* now we know where moof ends up, update offset in tfra */
     if (pad->tfra)
       atom_tfra_update_offset (pad->tfra, qtmux->header_size);
+
+    sidx =
+        atom_sidx_new (qtmux->context, 1, atom_trak_get_timescale (pad->trak),
+        pad->traf->tfdt.base_media_decode_time, 0, qtmux->current_chunk_size,
+        pad->fragment_duration);
+    atom_sidx_copy_data (sidx, &data, &size, &offset);
 
     moof = atom_moof_new (qtmux->context, qtmux->fragment_sequence);
     /* takes ownership */
