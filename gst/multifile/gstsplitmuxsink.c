@@ -180,6 +180,11 @@ GST_STATIC_PAD_TEMPLATE ("caption_%u",
     GST_PAD_SINK,
     GST_PAD_REQUEST,
     GST_STATIC_CAPS_ANY);
+static GstStaticPadTemplate meta_sink_template =
+GST_STATIC_PAD_TEMPLATE ("meta_%u",
+    GST_PAD_SINK,
+    GST_PAD_REQUEST,
+    GST_STATIC_CAPS_ANY);
 
 static GQuark PAD_CONTEXT;
 static GQuark EOS_FROM_US;
@@ -296,6 +301,8 @@ gst_splitmux_sink_class_init (GstSplitMuxSinkClass * klass)
       &subtitle_sink_template);
   gst_element_class_add_static_pad_template (gstelement_class,
       &caption_sink_template);
+  gst_element_class_add_static_pad_template (gstelement_class,
+      &meta_sink_template);
 
   gstelement_class->change_state =
       GST_DEBUG_FUNCPTR (gst_splitmux_sink_change_state);
