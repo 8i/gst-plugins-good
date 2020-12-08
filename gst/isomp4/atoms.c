@@ -5673,3 +5673,61 @@ build_uuid_xmp_atom (GstBuffer * xmp_data)
   return build_atom_info_wrapper ((Atom *) uuid, atom_uuid_copy_data,
       atom_uuid_free);
 }
+
+static void
+atom_sidx_init (AtomSIDX * sidx, guint32 reference_ID, guint32 timescale,
+    guint32 earliest_presentation_time, guint32 first_offset, guint32 size,
+    guint32 duration)
+{
+  guint8 flags[3] = { 0, 0, 0 };
+
+  atom_full_init (&sidx->header, FOURCC_sidx, 0, 0, 0, flags);
+  sidx->reference_ID = reference_ID;
+  sidx->timescale = timescale;
+  sidx->earliest_presentation_time = earliest_presentation_time;
+  sidx->first_offset = first_offset;
+  sidx->reference_count = 1;
+  sidx->size = size;
+  sidx->duration = duration;
+}
+
+AtomSIDX *
+atom_sidx_new (AtomsContext * context, guint32 reference_ID, guint32 timescale,
+    guint32 earliest_presentation_time, guint32 first_offset, guint32 size,
+    guint32 duration)
+{
+  AtomSIDX *sidx = g_new0 (AtomSIDX, 1);
+
+  atom_sidx_init (sidx, reference_ID, timescale, earliest_presentation_time,
+      first_offset, size, duration);
+  return sidx;
+
+}
+
+guint64
+atom_sidx_copy_data (AtomSIDX * sidx, guint8 ** buffer, guint64 * size,
+    guint64 * offset)
+{
+  guint64 original_offset = *offset;
+
+  if (!atom_full_copy_data (&sidx->header, buffer, size, offset)) {
+    return 0;
+  }
+
+  prop_copy_uint32 (sidx->reference_ID, buffer, size, offset);
+  prop_copy_uint32 (sidx->timescale, buffer, size, offset);
+  prop_copy_uint32 (sidx->earliest_presentation_time, buffer, size, offset);
+  prop_copy_uint32 (sidx->first_offset, buffer, size, offset);
+
+  prop_copy_uint16 (0, buffer, size, offset);
+  prop_copy_uint16 (1, buffer, size, offset);   // reference count;
+
+  prop_copy_uint32 (sidx->size, buffer, size, offset);
+  prop_copy_uint32 (sidx->duration, buffer, size, offset);
+
+  prop_copy_uint32 (0, buffer, size, offset);   // TODO: SAP stuff
+
+  atom_write_size (buffer, size, offset, original_offset);
+
+  return *offset - original_offset;
+}

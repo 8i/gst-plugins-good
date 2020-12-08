@@ -901,6 +901,28 @@ typedef struct _AtomMFRA
   GList *tfras;
 } AtomMFRA;
 
+typedef struct _SIDXEntry
+{
+  guint32 sample_count;
+  gint32 sample_delta;
+} SIDXEntry;
+
+typedef struct _AtomSIDX
+{
+  AtomFull header;
+
+  guint32 reference_ID;
+  guint32 timescale;
+  guint32 earliest_presentation_time;
+  guint32 first_offset;
+  guint16 reference_count;
+  guint32 size;
+  guint32 duration;
+
+  ATOM_ARRAY (SIDXEntry) entries;
+
+} AtomSIDX;
+
 /*
  * Function to serialize an atom
  */
@@ -1006,6 +1028,9 @@ void       atom_tfra_update_offset     (AtomTFRA * tfra, guint64 offset);
 void       atom_mfra_add_tfra          (AtomMFRA *mfra, AtomTFRA *tfra);
 guint64    atom_mfra_copy_data         (AtomMFRA *mfra, guint8 **buffer, guint64 *size, guint64* offset);
 
+
+AtomSIDX*  atom_sidx_new               (AtomsContext *context, guint32 reference_ID, guint32 timescale, guint32 earliest_presentation_time, guint32 first_offset, guint32 size, guint32 duration);
+guint64    atom_sidx_copy_data         (AtomSIDX *sidx, guint8 **buffer, guint64 *size, guint64* offset);
 
 /* media sample description related helpers */
 typedef struct
