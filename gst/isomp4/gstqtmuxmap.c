@@ -216,7 +216,8 @@ GstQTMuxFormatProp gst_qt_mux_format_list[] = {
             "audio/x-mulaw, " COMMON_AUDIO_CAPS (2, MAX) "; "
             AMR_CAPS " ; " ALAC_CAPS " ; " OPUS_CAPS),
         GST_STATIC_CAPS (TEXT_UTF8),
-      GST_STATIC_CAPS (CEA608_CAPS "; " CEA708_CAPS)}
+        GST_STATIC_CAPS (CEA608_CAPS "; " CEA708_CAPS),
+      GST_STATIC_CAPS_ANY}
   ,
   /* ISO 14496-14: mp42 as ISO base media extension
    * (supersedes original ISO 144996-1 mp41) */
@@ -233,7 +234,8 @@ GstQTMuxFormatProp gst_qt_mux_format_list[] = {
         GST_STATIC_CAPS (MP123_CAPS "; "
             AAC_CAPS " ; " AC3_CAPS " ; " ALAC_CAPS " ; " OPUS_CAPS),
         GST_STATIC_CAPS (TEXT_UTF8),
-      GST_STATIC_CAPS_NONE}
+        GST_STATIC_CAPS_NONE,
+      GST_STATIC_CAPS_ANY}
   ,
   /* Microsoft Smooth Streaming fmp4/isml */
   /* TODO add WMV/WMA support */
@@ -247,7 +249,8 @@ GstQTMuxFormatProp gst_qt_mux_format_list[] = {
         GST_STATIC_CAPS (MPEG4V_CAPS "; " H264_CAPS),
         GST_STATIC_CAPS (MP3_CAPS "; " AAC_CAPS),
         GST_STATIC_CAPS_NONE,
-      GST_STATIC_CAPS_NONE}
+        GST_STATIC_CAPS_NONE,
+      GST_STATIC_CAPS_ANY}
   ,
   /* 3GPP Technical Specification 26.244 V7.3.0
    * (extended in 3GPP2 File Formats for Multimedia Services) */
@@ -261,7 +264,8 @@ GstQTMuxFormatProp gst_qt_mux_format_list[] = {
         GST_STATIC_CAPS (H263_CAPS "; " MPEG4V_CAPS "; " H264_CAPS),
         GST_STATIC_CAPS (AMR_CAPS "; " MP3_CAPS "; " AAC_CAPS "; " AC3_CAPS),
         GST_STATIC_CAPS (TEXT_UTF8),
-      GST_STATIC_CAPS_NONE}
+        GST_STATIC_CAPS_NONE,
+      GST_STATIC_CAPS_ANY}
   ,
   /* ISO 15444-3: Motion-JPEG-2000 (also ISO base media extension) */
   {
@@ -275,7 +279,8 @@ GstQTMuxFormatProp gst_qt_mux_format_list[] = {
             "image/x-jpc, " COMMON_VIDEO_CAPS),
         GST_STATIC_CAPS (PCM_CAPS),
         GST_STATIC_CAPS_NONE,
-      GST_STATIC_CAPS_NONE}
+        GST_STATIC_CAPS_NONE,
+      GST_STATIC_CAPS_ANY}
   ,
   {
         GST_QT_MUX_FORMAT_NONE,

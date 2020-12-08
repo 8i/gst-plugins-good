@@ -347,7 +347,7 @@ struct _GstQTMux
   gboolean force_create_timecode_trak;
 
   /* for request pad naming */
-  guint video_pads, audio_pads, subtitle_pads, caption_pads;
+  guint video_pads, audio_pads, subtitle_pads, caption_pads, meta_pads;
 };
 
 struct _GstQTMuxClass
@@ -366,6 +366,7 @@ typedef struct _GstQTMuxClassParams
   GstCaps *audio_sink_caps;
   GstCaps *subtitle_sink_caps;
   GstCaps *caption_sink_caps;
+  GstCaps *meta_sink_caps;
 } GstQTMuxClassParams;
 
 #define GST_QT_MUX_PARAMS_QDATA g_quark_from_static_string("qt-mux-params")
