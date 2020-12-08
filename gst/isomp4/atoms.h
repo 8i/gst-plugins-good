@@ -1086,6 +1086,8 @@ SampleTableEntryMP4V * atom_trak_set_video_type (AtomTRAK * trak, AtomsContext *
 SampleTableEntryTX3G * atom_trak_set_subtitle_type (AtomTRAK * trak, AtomsContext * context,
                                SubtitleSampleEntry * entry);
 
+SampleTableEntry * atom_trak_set_meta_type (AtomTRAK * trak, AtomsContext * context, guint32 trak_timescale);
+
 SampleTableEntryTMCD *
 atom_trak_set_timecode_type (AtomTRAK * trak, AtomsContext * context, guint trak_timescale, GstVideoTimeCode * tc);
 

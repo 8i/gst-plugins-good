@@ -4204,6 +4204,44 @@ atom_trak_set_caption_type (AtomTRAK * trak, AtomsContext * context,
   return ste;
 }
 
+SampleTableEntry *
+atom_trak_set_meta_type (AtomTRAK * trak, AtomsContext * context,
+    guint32 trak_timescale)
+{
+  SampleTableEntry *ste;
+  AtomGMHD *gmhd = trak->mdia.minf.gmhd;
+  // AtomSTSD *stsd = &trak->mdia.minf.stbl.stsd;
+
+//  if (context->flavor != ATOMS_TREE_FLAVOR_MOV) {
+//    return NULL;
+//  }
+
+  trak->mdia.mdhd.time_info.timescale = trak_timescale;
+  trak->mdia.hdlr.component_type = FOURCC_mhlr;
+  trak->mdia.hdlr.handler_type = FOURCC_meta;
+  g_free (trak->mdia.hdlr.name);
+  trak->mdia.hdlr.name = g_strdup ("Metadata Handler");
+
+  // ste = g_new0 (SampleTableEntry, 1);
+  // atom_sample_entry_init (ste, caption_type);
+  // ste->kind = CLOSEDCAPTION;
+  // ste->data_reference_index = 1;
+  // stsd->entries = g_list_prepend (stsd->entries, ste);
+  // stsd->n_entries++;
+
+  gmhd = atom_gmhd_new ();
+  gmhd->gmin.graphics_mode = 0x0040;
+  gmhd->gmin.opcolor[0] = 0x8000;
+  gmhd->gmin.opcolor[1] = 0x8000;
+  gmhd->gmin.opcolor[2] = 0x8000;
+
+  trak->mdia.minf.gmhd = gmhd;
+  trak->is_video = FALSE;
+  trak->is_h264 = FALSE;
+
+  return ste;
+}
+
 static AtomInfo *
 build_pasp_extension (gint par_width, gint par_height)
 {

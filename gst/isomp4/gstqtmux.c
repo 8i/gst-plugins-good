@@ -446,7 +446,7 @@ gst_qt_mux_base_init (gpointer g_class)
   GstQTMuxClass *klass = (GstQTMuxClass *) g_class;
   GstQTMuxClassParams *params;
   GstPadTemplate *videosinktempl, *audiosinktempl, *subtitlesinktempl,
-      *captionsinktempl;
+      *captionsinktempl, *metasinktempl;
   GstPadTemplate *srctempl;
   gchar *longname, *description;
 
@@ -496,6 +496,13 @@ gst_qt_mux_base_init (gpointer g_class)
         GST_PAD_SINK, GST_PAD_REQUEST, params->caption_sink_caps,
         GST_TYPE_QT_MUX_PAD);
     gst_element_class_add_pad_template (element_class, captionsinktempl);
+  }
+
+  if (params->meta_sink_caps) {
+    metasinktempl = gst_pad_template_new_with_gtype ("meta_%u",
+        GST_PAD_SINK, GST_PAD_REQUEST, params->meta_sink_caps,
+        GST_TYPE_QT_MUX_PAD);
+    gst_element_class_add_pad_template (element_class, metasinktempl);
   }
 
   klass->format = params->prop->format;
@@ -965,6 +972,16 @@ extract_608_field_from_s334_1a (const guint8 * ccdata, gsize ccdata_size,
   return res_size;
 }
 
+static GstBuffer *
+gst_qt_mux_prepare_meta_buffer (GstQTMuxPad * qtpad, GstBuffer * buf,
+    GstQTMux * qtmux)
+{
+  GstBuffer *newbuff = NULL;
+  if (buf == NULL)
+    return NULL;
+  newbuff = gst_buffer_copy (buf);
+  return newbuff;
+}
 
 static GstBuffer *
 gst_qt_mux_prepare_caption_buffer (GstQTMuxPad * qtpad, GstBuffer * buf,
@@ -6385,6 +6402,59 @@ refuse_caps:
   }
 }
 
+static gboolean
+gst_qt_mux_meta_sink_set_caps (GstQTMuxPad * qtpad, GstCaps * caps)
+{
+  GstPad *pad = GST_PAD (qtpad);
+  GstQTMux *qtmux = GST_QT_MUX_CAST (gst_pad_get_parent (pad));
+  GstStructure *structure;
+  guint32 fourcc_entry;
+  guint32 timescale;
+
+  GST_DEBUG_OBJECT (qtmux, "%s:%s, caps=%" GST_PTR_FORMAT,
+      GST_DEBUG_PAD_NAME (pad), caps);
+
+  /* captions default */
+  qtpad->is_out_of_order = FALSE;
+  qtpad->sync = FALSE;
+  qtpad->prepare_buf_func = gst_qt_mux_prepare_meta_buffer;
+
+  structure = gst_caps_get_structure (caps, 0);
+
+  /* We'll accept whatever! */
+  fourcc_entry = FOURCC_meta;
+
+  /* We set the real timescale later to the one from the video track when
+   * writing the headers */
+  timescale = gst_qt_mux_pad_get_timescale (GST_QT_MUX_PAD_CAST (pad));
+  if (!timescale && qtmux->trak_timescale)
+    timescale = qtmux->trak_timescale;
+  else if (!timescale)
+    timescale = 30000;
+
+  qtpad->fourcc = fourcc_entry;
+  qtpad->trak_ste =
+      (SampleTableEntry *) atom_trak_set_meta_type (qtpad->trak,
+      qtmux->context, timescale);
+
+  // /* Initialize caption track language code to 0 unless something else is
+  //  * specified. Without this, Final Cut considers it "non-standard"
+  //  */
+  // qtpad->trak->mdia.mdhd.language_code = 0;
+
+  gst_object_unref (qtmux);
+  return TRUE;
+
+  /* ERRORS */
+refuse_caps:
+  {
+    GST_WARNING_OBJECT (qtmux, "pad %s refused caps %" GST_PTR_FORMAT,
+        GST_PAD_NAME (pad), caps);
+    gst_object_unref (qtmux);
+    return FALSE;
+  }
+}
+
 static GstFlowReturn
 gst_qt_mux_sink_event_pre_queue (GstAggregator * agg,
     GstAggregatorPad * agg_pad, GstEvent * event)
@@ -6582,6 +6652,13 @@ gst_qt_mux_request_new_pad (GstElement * element,
       name = g_strdup (req_name);
     } else {
       name = g_strdup_printf ("caption_%u", qtmux->caption_pads++);
+    }
+  } else if (templ == gst_element_class_get_pad_template (klass, "meta_%u")) {
+    setcaps_func = gst_qt_mux_meta_sink_set_caps;
+    if (req_name != NULL && sscanf (req_name, "meta_%u", &pad_id) == 1) {
+      name = g_strdup (req_name);
+    } else {
+      name = g_strdup_printf ("meta_%u", qtmux->meta_pads++);
     }
   } else
     goto wrong_template;
@@ -6873,7 +6950,7 @@ gst_qt_mux_register (GstPlugin * plugin)
 
   while (TRUE) {
     GstQTMuxFormatProp *prop;
-    GstCaps *subtitle_caps, *caption_caps;
+    GstCaps *subtitle_caps, *caption_caps, *meta_caps;
 
     prop = &gst_qt_mux_format_list[i];
     format = prop->format;
@@ -6897,6 +6974,12 @@ gst_qt_mux_register (GstPlugin * plugin)
       params->caption_sink_caps = caption_caps;
     } else {
       gst_caps_unref (caption_caps);
+    }
+    meta_caps = gst_static_caps_get (&prop->meta_sink_caps);
+    if (!gst_caps_is_equal (meta_caps, GST_CAPS_NONE)) {
+      params->meta_sink_caps = meta_caps;
+    } else {
+      gst_caps_unref (meta_caps);
     }
 
     /* create the type now */
