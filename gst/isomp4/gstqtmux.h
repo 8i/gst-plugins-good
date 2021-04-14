@@ -177,8 +177,6 @@ struct _GstQTMuxPad
   guint64 raw_audio_adapter_offset;
   GstClockTime raw_audio_adapter_pts;
   GstFlowReturn flow_status;
-
-  GstCaps *configured_caps;
 };
 
 struct _GstQTMuxPadClass
