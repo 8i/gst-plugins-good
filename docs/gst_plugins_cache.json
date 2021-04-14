@@ -7503,7 +7503,7 @@
                 "description": "Multiplex audio and video into a 3GPP file",
                 "hierarchy": [
                     "Gst3GPPMux",
-                    "GstBaseQTMux",
+                    "GstQTMux",
                     "GstAggregator",
                     "GstElement",
                     "GstObject",
@@ -7564,7 +7564,7 @@
                 "description": "Multiplex audio and video into a ISML file",
                 "hierarchy": [
                     "GstISMLMux",
-                    "GstBaseQTMux",
+                    "GstQTMux",
                     "GstAggregator",
                     "GstElement",
                     "GstObject",
@@ -7619,7 +7619,7 @@
                 "description": "Multiplex audio and video into a MJ2 file",
                 "hierarchy": [
                     "GstMJ2Mux",
-                    "GstBaseQTMux",
+                    "GstQTMux",
                     "GstAggregator",
                     "GstElement",
                     "GstObject",
@@ -7674,7 +7674,7 @@
                 "description": "Multiplex audio and video into a MP4 file",
                 "hierarchy": [
                     "GstMP4Mux",
-                    "GstBaseQTMux",
+                    "GstQTMux",
                     "GstAggregator",
                     "GstElement",
                     "GstObject",
@@ -7840,8 +7840,8 @@
                 "author": "Thiago Sousa Santos <thiagoss@embedded.ufcg.edu.br>",
                 "description": "Multiplex audio and video into a QuickTime file",
                 "hierarchy": [
+                    "GstQTMuxElement",
                     "GstQTMux",
-                    "GstBaseQTMux",
                     "GstAggregator",
                     "GstElement",
                     "GstObject",
@@ -7935,9 +7935,9 @@
         "filename": "gstisomp4",
         "license": "LGPL",
         "other-types": {
-            "GstBaseQTMux": {
+            "GstQTMux": {
                 "hierarchy": [
-                    "GstBaseQTMux",
+                    "GstQTMux",
                     "GstAggregator",
                     "GstElement",
                     "GstObject",
