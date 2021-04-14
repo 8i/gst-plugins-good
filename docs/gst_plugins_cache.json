@@ -7503,7 +7503,6 @@
                 "description": "Multiplex audio and video into a 3GPP file",
                 "hierarchy": [
                     "Gst3GPPMux",
-                    "GstQTMux",
                     "GstAggregator",
                     "GstElement",
                     "GstObject",
@@ -7543,413 +7542,6 @@
                         "type": "GstQTMuxPad"
                     }
                 },
-                "properties": {
-                    "streamable": {
-                        "blurb": "If set to true, the output should be as if it is to be streamed and hence no indexes written or duration written. (DEPRECATED, only valid for fragmented MP4)",
-                        "conditionally-available": false,
-                        "construct": true,
-                        "construct-only": false,
-                        "controllable": false,
-                        "default": "false",
-                        "mutable": "null",
-                        "readable": true,
-                        "type": "gboolean",
-                        "writable": true
-                    }
-                },
-                "rank": "primary"
-            },
-            "ismlmux": {
-                "author": "Thiago Sousa Santos <thiagoss@embedded.ufcg.edu.br>",
-                "description": "Multiplex audio and video into a ISML file",
-                "hierarchy": [
-                    "GstISMLMux",
-                    "GstQTMux",
-                    "GstAggregator",
-                    "GstElement",
-                    "GstObject",
-                    "GInitiallyUnowned",
-                    "GObject"
-                ],
-                "interfaces": [
-                    "GstTagSetter",
-                    "GstTagXmpWriter",
-                    "GstPreset"
-                ],
-                "klass": "Codec/Muxer",
-                "long-name": "ISML Muxer",
-                "pad-templates": {
-                    "audio_%%u": {
-                        "caps": "audio/mpeg:\n    mpegversion: 1\n          layer: 3\n       channels: [ 1, 2 ]\n           rate: [ 1, 2147483647 ]\naudio/mpeg:\n    mpegversion: 4\n  stream-format: raw\n       channels: [ 1, 8 ]\n           rate: [ 1, 2147483647 ]\n",
-                        "direction": "sink",
-                        "presence": "request",
-                        "type": "GstQTMuxPad"
-                    },
-                    "src": {
-                        "caps": "video/quicktime:\n        variant: iso-fragmented\n",
-                        "direction": "src",
-                        "presence": "always",
-                        "type": "GstAggregatorPad"
-                    },
-                    "video_%%u": {
-                        "caps": "video/mpeg:\n    mpegversion: 4\n   systemstream: false\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-divx:\n    divxversion: 5\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-h264:\n  stream-format: avc\n      alignment: au\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\n",
-                        "direction": "sink",
-                        "presence": "request",
-                        "type": "GstQTMuxPad"
-                    }
-                },
-                "properties": {
-                    "streamable": {
-                        "blurb": "If set to true, the output should be as if it is to be streamed and hence no indexes written or duration written.",
-                        "conditionally-available": false,
-                        "construct": true,
-                        "construct-only": false,
-                        "controllable": false,
-                        "default": "true",
-                        "mutable": "null",
-                        "readable": true,
-                        "type": "gboolean",
-                        "writable": true
-                    }
-                },
-                "rank": "primary"
-            },
-            "mj2mux": {
-                "author": "Thiago Sousa Santos <thiagoss@embedded.ufcg.edu.br>",
-                "description": "Multiplex audio and video into a MJ2 file",
-                "hierarchy": [
-                    "GstMJ2Mux",
-                    "GstQTMux",
-                    "GstAggregator",
-                    "GstElement",
-                    "GstObject",
-                    "GInitiallyUnowned",
-                    "GObject"
-                ],
-                "interfaces": [
-                    "GstTagSetter",
-                    "GstTagXmpWriter",
-                    "GstPreset"
-                ],
-                "klass": "Codec/Muxer",
-                "long-name": "MJ2 Muxer",
-                "pad-templates": {
-                    "audio_%%u": {
-                        "caps": "audio/x-raw:\n         format: { S16LE, S16BE, S8, U8 }\n         layout: interleaved\n       channels: [ 1, 2 ]\n           rate: [ 1, 2147483647 ]\n",
-                        "direction": "sink",
-                        "presence": "request",
-                        "type": "GstQTMuxPad"
-                    },
-                    "src": {
-                        "caps": "video/mj2:\n",
-                        "direction": "src",
-                        "presence": "always",
-                        "type": "GstAggregatorPad"
-                    },
-                    "video_%%u": {
-                        "caps": "image/x-j2c:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nimage/x-jpc:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\n",
-                        "direction": "sink",
-                        "presence": "request",
-                        "type": "GstQTMuxPad"
-                    }
-                },
-                "properties": {
-                    "streamable": {
-                        "blurb": "If set to true, the output should be as if it is to be streamed and hence no indexes written or duration written. (DEPRECATED, only valid for fragmented MP4)",
-                        "conditionally-available": false,
-                        "construct": true,
-                        "construct-only": false,
-                        "controllable": false,
-                        "default": "false",
-                        "mutable": "null",
-                        "readable": true,
-                        "type": "gboolean",
-                        "writable": true
-                    }
-                },
-                "rank": "primary"
-            },
-            "mp4mux": {
-                "author": "Thiago Sousa Santos <thiagoss@embedded.ufcg.edu.br>",
-                "description": "Multiplex audio and video into a MP4 file",
-                "hierarchy": [
-                    "GstMP4Mux",
-                    "GstQTMux",
-                    "GstAggregator",
-                    "GstElement",
-                    "GstObject",
-                    "GInitiallyUnowned",
-                    "GObject"
-                ],
-                "interfaces": [
-                    "GstTagSetter",
-                    "GstTagXmpWriter",
-                    "GstPreset"
-                ],
-                "klass": "Codec/Muxer",
-                "long-name": "MP4 Muxer",
-                "pad-templates": {
-                    "audio_%%u": {
-                        "caps": "audio/mpeg:\n    mpegversion: 1\n          layer: [ 1, 3 ]\n       channels: [ 1, 2 ]\n           rate: [ 1, 2147483647 ]\naudio/mpeg:\n    mpegversion: 4\n  stream-format: raw\n       channels: [ 1, 8 ]\n           rate: [ 1, 2147483647 ]\naudio/x-ac3:\n       channels: [ 1, 6 ]\n           rate: [ 1, 2147483647 ]\naudio/x-alac:\n       channels: [ 1, 2 ]\n           rate: [ 1, 2147483647 ]\naudio/x-opus:\nchannel-mapping-family: [ 0, 255 ]\n       channels: [ 1, 8 ]\n           rate: [ 1, 2147483647 ]\n",
-                        "direction": "sink",
-                        "presence": "request",
-                        "type": "GstQTMuxPad"
-                    },
-                    "src": {
-                        "caps": "video/quicktime:\n        variant: iso\n",
-                        "direction": "src",
-                        "presence": "always",
-                        "type": "GstAggregatorPad"
-                    },
-                    "subtitle_%%u": {
-                        "caps": "text/x-raw:\n         format: utf8\n",
-                        "direction": "sink",
-                        "presence": "request",
-                        "type": "GstQTMuxPad"
-                    },
-                    "video_%%u": {
-                        "caps": "video/mpeg:\n    mpegversion: 4\n   systemstream: false\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-divx:\n    divxversion: 5\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-h264:\n  stream-format: avc\n      alignment: au\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-h265:\n  stream-format: { (string)hvc1, (string)hev1 }\n      alignment: au\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-mp4-part:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-av1:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\n",
-                        "direction": "sink",
-                        "presence": "request",
-                        "type": "GstQTMuxPad"
-                    }
-                },
-                "properties": {
-                    "streamable": {
-                        "blurb": "If set to true, the output should be as if it is to be streamed and hence no indexes written or duration written. (DEPRECATED, only valid for fragmented MP4)",
-                        "conditionally-available": false,
-                        "construct": true,
-                        "construct-only": false,
-                        "controllable": false,
-                        "default": "false",
-                        "mutable": "null",
-                        "readable": true,
-                        "type": "gboolean",
-                        "writable": true
-                    }
-                },
-                "rank": "primary"
-            },
-            "qtdemux": {
-                "author": "David Schleef <ds@schleef.org>, Wim Taymans <wim@fluendo.com>",
-                "description": "Demultiplex a QuickTime file into audio and video streams",
-                "hierarchy": [
-                    "GstQTDemux",
-                    "GstElement",
-                    "GstObject",
-                    "GInitiallyUnowned",
-                    "GObject"
-                ],
-                "klass": "Codec/Demuxer",
-                "long-name": "QuickTime demuxer",
-                "pad-templates": {
-                    "audio_%%u": {
-                        "caps": "ANY",
-                        "direction": "src",
-                        "presence": "sometimes"
-                    },
-                    "sink": {
-                        "caps": "video/quicktime:\nvideo/mj2:\naudio/x-m4a:\napplication/x-3gp:\n",
-                        "direction": "sink",
-                        "presence": "always"
-                    },
-                    "subtitle_%%u": {
-                        "caps": "ANY",
-                        "direction": "src",
-                        "presence": "sometimes"
-                    },
-                    "video_%%u": {
-                        "caps": "ANY",
-                        "direction": "src",
-                        "presence": "sometimes"
-                    }
-                },
-                "rank": "primary",
-                "signals": {}
-            },
-            "qtmoovrecover": {
-                "author": "Thiago Santos <thiago.sousa.santos@collabora.co.uk>",
-                "description": "Recovers unfinished qtmux files",
-                "hierarchy": [
-                    "GstQTMoovRecover",
-                    "GstPipeline",
-                    "GstBin",
-                    "GstElement",
-                    "GstObject",
-                    "GInitiallyUnowned",
-                    "GObject"
-                ],
-                "interfaces": [
-                    "GstChildProxy"
-                ],
-                "klass": "Util",
-                "long-name": "QT Moov Recover",
-                "properties": {
-                    "broken-input": {
-                        "blurb": "Path to broken input file. (If qtmux was on faststart mode, this file is the faststart file)",
-                        "conditionally-available": false,
-                        "construct": false,
-                        "construct-only": false,
-                        "controllable": false,
-                        "default": "NULL",
-                        "mutable": "null",
-                        "readable": true,
-                        "type": "gchararray",
-                        "writable": true
-                    },
-                    "faststart-mode": {
-                        "blurb": "If the broken input is from faststart mode",
-                        "conditionally-available": false,
-                        "construct": false,
-                        "construct-only": false,
-                        "controllable": false,
-                        "default": "false",
-                        "mutable": "null",
-                        "readable": true,
-                        "type": "gboolean",
-                        "writable": true
-                    },
-                    "fixed-output": {
-                        "blurb": "Path to write the fixed file to (used as output)",
-                        "conditionally-available": false,
-                        "construct": false,
-                        "construct-only": false,
-                        "controllable": false,
-                        "default": "NULL",
-                        "mutable": "null",
-                        "readable": true,
-                        "type": "gchararray",
-                        "writable": true
-                    },
-                    "recovery-input": {
-                        "blurb": "Path to recovery file (used as input)",
-                        "conditionally-available": false,
-                        "construct": false,
-                        "construct-only": false,
-                        "controllable": false,
-                        "default": "NULL",
-                        "mutable": "null",
-                        "readable": true,
-                        "type": "gchararray",
-                        "writable": true
-                    }
-                },
-                "rank": "none"
-            },
-            "qtmux": {
-                "author": "Thiago Sousa Santos <thiagoss@embedded.ufcg.edu.br>",
-                "description": "Multiplex audio and video into a QuickTime file",
-                "hierarchy": [
-                    "GstQTMuxElement",
-                    "GstQTMux",
-                    "GstAggregator",
-                    "GstElement",
-                    "GstObject",
-                    "GInitiallyUnowned",
-                    "GObject"
-                ],
-                "interfaces": [
-                    "GstTagSetter",
-                    "GstTagXmpWriter",
-                    "GstPreset"
-                ],
-                "klass": "Codec/Muxer",
-                "long-name": "QuickTime Muxer",
-                "pad-templates": {
-                    "audio_%%u": {
-                        "caps": "audio/x-raw:\n         format: { S32LE, S32BE, S24LE, S24BE, S16LE, S16BE, S8, U8 }\n         layout: interleaved\n       channels: [ 1, 2 ]\n           rate: [ 1, 2147483647 ]\naudio/x-raw:\n         format: { S32LE, S32BE, S24LE, S24BE, S16LE, S16BE, S8, U8 }\n         layout: interleaved\n   channel-mask: 0x0000000000000000\n       channels: [ 1, 16 ]\n           rate: [ 1, 2147483647 ]\naudio/mpeg:\n    mpegversion: 1\n          layer: [ 1, 3 ]\n       channels: [ 1, 2 ]\n           rate: [ 1, 2147483647 ]\naudio/mpeg:\n    mpegversion: 4\n  stream-format: raw\n       channels: [ 1, 8 ]\n           rate: [ 1, 2147483647 ]\naudio/x-ac3:\n       channels: [ 1, 6 ]\n           rate: [ 1, 2147483647 ]\naudio/x-adpcm:\n         layout: dvi\n    block_align: [ 64, 8096 ]\n       channels: [ 1, 2 ]\n           rate: [ 1, 2147483647 ]\naudio/x-alaw:\n       channels: [ 1, 2 ]\n           rate: [ 1, 2147483647 ]\naudio/x-mulaw:\n       channels: [ 1, 2 ]\n           rate: [ 1, 2147483647 ]\naudio/AMR:\n           rate: 8000\n       channels: [ 1, 2 ]\naudio/AMR-WB:\n           rate: 16000\n       channels: [ 1, 2 ]\naudio/x-alac:\n       channels: [ 1, 2 ]\n           rate: [ 1, 2147483647 ]\naudio/x-opus:\nchannel-mapping-family: [ 0, 255 ]\n       channels: [ 1, 8 ]\n           rate: [ 1, 2147483647 ]\n",
-                        "direction": "sink",
-                        "presence": "request",
-                        "type": "GstQTMuxPad"
-                    },
-                    "caption_%%u": {
-                        "caps": "closedcaption/x-cea-608:\n         format: s334-1a\nclosedcaption/x-cea-708:\n         format: cdp\n",
-                        "direction": "sink",
-                        "presence": "request",
-                        "type": "GstQTMuxPad"
-                    },
-                    "src": {
-                        "caps": "video/quicktime:\n        variant: apple\nvideo/quicktime:\n",
-                        "direction": "src",
-                        "presence": "always",
-                        "type": "GstAggregatorPad"
-                    },
-                    "subtitle_%%u": {
-                        "caps": "text/x-raw:\n         format: utf8\n",
-                        "direction": "sink",
-                        "presence": "request",
-                        "type": "GstQTMuxPad"
-                    },
-                    "video_%%u": {
-                        "caps": "video/x-raw:\n         format: { RGB, UYVY, v210 }\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/mpeg:\n    mpegversion: 4\n   systemstream: false\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-divx:\n    divxversion: 5\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-prores:\n        variant: { (string)standard, (string)lt, (string)hq, (string)proxy, (string)4444, (string)4444xq }\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-cineform:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-h263:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-h264:\n  stream-format: avc\n      alignment: au\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-h265:\n  stream-format: { (string)hvc1, (string)hev1 }\n      alignment: au\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-svq:\n     svqversion: 3\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-dv:\n   systemstream: false\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nimage/jpeg:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nimage/png:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-vp8:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-vp9:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-dirac:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-qt-part:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-av1:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\n",
-                        "direction": "sink",
-                        "presence": "request",
-                        "type": "GstQTMuxPad"
-                    }
-                },
-                "properties": {
-                    "streamable": {
-                        "blurb": "If set to true, the output should be as if it is to be streamed and hence no indexes written or duration written. (DEPRECATED, only valid for fragmented MP4)",
-                        "conditionally-available": false,
-                        "construct": true,
-                        "construct-only": false,
-                        "controllable": false,
-                        "default": "false",
-                        "mutable": "null",
-                        "readable": true,
-                        "type": "gboolean",
-                        "writable": true
-                    }
-                },
-                "rank": "primary"
-            },
-            "rtpxqtdepay": {
-                "author": "Wim Taymans <wim@fluendo.com>",
-                "description": "Extracts Quicktime audio/video from RTP packets",
-                "hierarchy": [
-                    "GstRtpXQTDepay",
-                    "GstRTPBaseDepayload",
-                    "GstElement",
-                    "GstObject",
-                    "GInitiallyUnowned",
-                    "GObject"
-                ],
-                "klass": "Codec/Depayloader/Network",
-                "long-name": "RTP packet depayloader",
-                "pad-templates": {
-                    "sink": {
-                        "caps": "application/x-rtp:\n        payload: [ 96, 127 ]\n          media: { (string)audio, (string)video }\n     clock-rate: [ 1, 2147483647 ]\n  encoding-name: { (string)X-QT, (string)X-QUICKTIME }\n",
-                        "direction": "sink",
-                        "presence": "always"
-                    },
-                    "src": {
-                        "caps": "ANY",
-                        "direction": "src",
-                        "presence": "always"
-                    }
-                },
-                "properties": {},
-                "rank": "marginal"
-            }
-        },
-        "filename": "gstisomp4",
-        "license": "LGPL",
-        "other-types": {
-            "GstQTMux": {
-                "hierarchy": [
-                    "GstQTMux",
-                    "GstAggregator",
-                    "GstElement",
-                    "GstObject",
-                    "GInitiallyUnowned",
-                    "GObject"
-                ],
-                "interfaces": [
-                    "GstTagSetter",
-                    "GstTagXmpWriter",
-                    "GstPreset"
-                ],
-                "kind": "object",
                 "properties": {
                     "dts-method": {
                         "blurb": "Method to determine DTS time (DEPRECATED)",
@@ -8023,18 +7615,6 @@
                         "mutable": "null",
                         "readable": true,
                         "type": "guint",
-                        "writable": true
-                    },
-                    "fragment-mode": {
-                        "blurb": "How to to write fragments to the file.  Only used when 'fragment-duration' is greather than 0",
-                        "conditionally-available": false,
-                        "construct": false,
-                        "construct-only": false,
-                        "controllable": false,
-                        "default": "dash-or-mss (0)",
-                        "mutable": "null",
-                        "readable": true,
-                        "type": "GstQTMuxFragmentMode",
                         "writable": true
                     },
                     "interleave-bytes": {
@@ -8199,6 +7779,18 @@
                         "type": "guint64",
                         "writable": true
                     },
+                    "streamable": {
+                        "blurb": "If set to true, the output should be as if it is to be streamed and hence no indexes written or duration written. (DEPRECATED, only valid for fragmented MP4)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "false",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
                     "trak-timescale": {
                         "blurb": "Timescale to use for the tracks (units per second, 0 is automatic)",
                         "conditionally-available": false,
@@ -8213,8 +7805,1381 @@
                         "type": "guint",
                         "writable": true
                     }
-                }
+                },
+                "rank": "primary"
             },
+            "ismlmux": {
+                "author": "Thiago Sousa Santos <thiagoss@embedded.ufcg.edu.br>",
+                "description": "Multiplex audio and video into a ISML file",
+                "hierarchy": [
+                    "GstISMLMux",
+                    "GstAggregator",
+                    "GstElement",
+                    "GstObject",
+                    "GInitiallyUnowned",
+                    "GObject"
+                ],
+                "interfaces": [
+                    "GstTagSetter",
+                    "GstTagXmpWriter",
+                    "GstPreset"
+                ],
+                "klass": "Codec/Muxer",
+                "long-name": "ISML Muxer",
+                "pad-templates": {
+                    "audio_%%u": {
+                        "caps": "audio/mpeg:\n    mpegversion: 1\n          layer: 3\n       channels: [ 1, 2 ]\n           rate: [ 1, 2147483647 ]\naudio/mpeg:\n    mpegversion: 4\n  stream-format: raw\n       channels: [ 1, 8 ]\n           rate: [ 1, 2147483647 ]\n",
+                        "direction": "sink",
+                        "presence": "request",
+                        "type": "GstQTMuxPad"
+                    },
+                    "src": {
+                        "caps": "video/quicktime:\n        variant: iso-fragmented\n",
+                        "direction": "src",
+                        "presence": "always",
+                        "type": "GstAggregatorPad"
+                    },
+                    "video_%%u": {
+                        "caps": "video/mpeg:\n    mpegversion: 4\n   systemstream: false\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-divx:\n    divxversion: 5\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-h264:\n  stream-format: avc\n      alignment: au\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\n",
+                        "direction": "sink",
+                        "presence": "request",
+                        "type": "GstQTMuxPad"
+                    }
+                },
+                "properties": {
+                    "dts-method": {
+                        "blurb": "Method to determine DTS time (DEPRECATED)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "reorder (1)",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "GstQTMuxDtsMethods",
+                        "writable": true
+                    },
+                    "faststart": {
+                        "blurb": "If the file should be formatted for faststart (headers first)",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "false",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "faststart-file": {
+                        "blurb": "File that will be used temporarily to store data from the stream when creating a faststart file. If null a filepath will be created automatically",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "NULL",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gchararray",
+                        "writable": true
+                    },
+                    "force-chunks": {
+                        "blurb": "Force multiple chunks to be created even for single-stream files",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "false",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "force-create-timecode-trak": {
+                        "blurb": "Create a timecode trak even in unsupported flavors",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "false",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "fragment-duration": {
+                        "blurb": "Fragment durations in ms (produce a fragmented file if > 0)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "2000",
+                        "max": "-1",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint",
+                        "writable": true
+                    },
+                    "interleave-bytes": {
+                        "blurb": "Interleave between streams in bytes",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "0",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": true
+                    },
+                    "interleave-time": {
+                        "blurb": "Interleave between streams in nanoseconds",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "250000000",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": true
+                    },
+                    "max-raw-audio-drift": {
+                        "blurb": "Maximum allowed drift of raw audio samples vs. timestamps in nanoseconds",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "40000000",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": true
+                    },
+                    "moov-recovery-file": {
+                        "blurb": "File to be used to store data for moov atom making movie file recovery possible in case of a crash during muxing. Null for disabled. (Experimental)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "NULL",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gchararray",
+                        "writable": true
+                    },
+                    "movie-timescale": {
+                        "blurb": "Timescale to use in the movie (units per second, 0 == default)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "0",
+                        "max": "-1",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint",
+                        "writable": true
+                    },
+                    "presentation-time": {
+                        "blurb": "Calculate and include presentation/composition time (in addition to decoding time)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "true",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "reserved-bytes-per-sec": {
+                        "blurb": "Multiplier for converting reserved-max-duration into bytes of header to reserve, per second, per track",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "550",
+                        "max": "10000",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint",
+                        "writable": true
+                    },
+                    "reserved-duration-remaining": {
+                        "blurb": "Reports the approximate amount of remaining moov header space reserved using reserved-max-duration",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "18446744073709551615",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": false
+                    },
+                    "reserved-max-duration": {
+                        "blurb": "When set to a value > 0, reserves space for index tables at the beginning of the file.",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "18446744073709551615",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": true
+                    },
+                    "reserved-moov-update-period": {
+                        "blurb": "When used with reserved-max-duration, periodically updates the index tables with information muxed so far.",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "18446744073709551615",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": true
+                    },
+                    "reserved-prefill": {
+                        "blurb": "Prefill samples table of reserved duration",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "false",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "start-gap-threshold": {
+                        "blurb": "Threshold for creating an edit list for gaps at the start in nanoseconds",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "0",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": true
+                    },
+                    "streamable": {
+                        "blurb": "If set to true, the output should be as if it is to be streamed and hence no indexes written or duration written.",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "true",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "trak-timescale": {
+                        "blurb": "Timescale to use for the tracks (units per second, 0 is automatic)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "0",
+                        "max": "-1",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint",
+                        "writable": true
+                    }
+                },
+                "rank": "primary"
+            },
+            "mj2mux": {
+                "author": "Thiago Sousa Santos <thiagoss@embedded.ufcg.edu.br>",
+                "description": "Multiplex audio and video into a MJ2 file",
+                "hierarchy": [
+                    "GstMJ2Mux",
+                    "GstAggregator",
+                    "GstElement",
+                    "GstObject",
+                    "GInitiallyUnowned",
+                    "GObject"
+                ],
+                "interfaces": [
+                    "GstTagSetter",
+                    "GstTagXmpWriter",
+                    "GstPreset"
+                ],
+                "klass": "Codec/Muxer",
+                "long-name": "MJ2 Muxer",
+                "pad-templates": {
+                    "audio_%%u": {
+                        "caps": "audio/x-raw:\n         format: { S16LE, S16BE, S8, U8 }\n         layout: interleaved\n       channels: [ 1, 2 ]\n           rate: [ 1, 2147483647 ]\n",
+                        "direction": "sink",
+                        "presence": "request",
+                        "type": "GstQTMuxPad"
+                    },
+                    "src": {
+                        "caps": "video/mj2:\n",
+                        "direction": "src",
+                        "presence": "always",
+                        "type": "GstAggregatorPad"
+                    },
+                    "video_%%u": {
+                        "caps": "image/x-j2c:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nimage/x-jpc:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\n",
+                        "direction": "sink",
+                        "presence": "request",
+                        "type": "GstQTMuxPad"
+                    }
+                },
+                "properties": {
+                    "dts-method": {
+                        "blurb": "Method to determine DTS time (DEPRECATED)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "reorder (1)",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "GstQTMuxDtsMethods",
+                        "writable": true
+                    },
+                    "faststart": {
+                        "blurb": "If the file should be formatted for faststart (headers first)",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "false",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "faststart-file": {
+                        "blurb": "File that will be used temporarily to store data from the stream when creating a faststart file. If null a filepath will be created automatically",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "NULL",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gchararray",
+                        "writable": true
+                    },
+                    "force-chunks": {
+                        "blurb": "Force multiple chunks to be created even for single-stream files",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "false",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "force-create-timecode-trak": {
+                        "blurb": "Create a timecode trak even in unsupported flavors",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "false",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "fragment-duration": {
+                        "blurb": "Fragment durations in ms (produce a fragmented file if > 0)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "0",
+                        "max": "-1",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint",
+                        "writable": true
+                    },
+                    "interleave-bytes": {
+                        "blurb": "Interleave between streams in bytes",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "0",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": true
+                    },
+                    "interleave-time": {
+                        "blurb": "Interleave between streams in nanoseconds",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "250000000",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": true
+                    },
+                    "max-raw-audio-drift": {
+                        "blurb": "Maximum allowed drift of raw audio samples vs. timestamps in nanoseconds",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "40000000",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": true
+                    },
+                    "moov-recovery-file": {
+                        "blurb": "File to be used to store data for moov atom making movie file recovery possible in case of a crash during muxing. Null for disabled. (Experimental)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "NULL",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gchararray",
+                        "writable": true
+                    },
+                    "movie-timescale": {
+                        "blurb": "Timescale to use in the movie (units per second, 0 == default)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "0",
+                        "max": "-1",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint",
+                        "writable": true
+                    },
+                    "presentation-time": {
+                        "blurb": "Calculate and include presentation/composition time (in addition to decoding time)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "true",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "reserved-bytes-per-sec": {
+                        "blurb": "Multiplier for converting reserved-max-duration into bytes of header to reserve, per second, per track",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "550",
+                        "max": "10000",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint",
+                        "writable": true
+                    },
+                    "reserved-duration-remaining": {
+                        "blurb": "Reports the approximate amount of remaining moov header space reserved using reserved-max-duration",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "18446744073709551615",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": false
+                    },
+                    "reserved-max-duration": {
+                        "blurb": "When set to a value > 0, reserves space for index tables at the beginning of the file.",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "18446744073709551615",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": true
+                    },
+                    "reserved-moov-update-period": {
+                        "blurb": "When used with reserved-max-duration, periodically updates the index tables with information muxed so far.",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "18446744073709551615",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": true
+                    },
+                    "reserved-prefill": {
+                        "blurb": "Prefill samples table of reserved duration",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "false",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "start-gap-threshold": {
+                        "blurb": "Threshold for creating an edit list for gaps at the start in nanoseconds",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "0",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": true
+                    },
+                    "streamable": {
+                        "blurb": "If set to true, the output should be as if it is to be streamed and hence no indexes written or duration written. (DEPRECATED, only valid for fragmented MP4)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "false",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "trak-timescale": {
+                        "blurb": "Timescale to use for the tracks (units per second, 0 is automatic)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "0",
+                        "max": "-1",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint",
+                        "writable": true
+                    }
+                },
+                "rank": "primary"
+            },
+            "mp4mux": {
+                "author": "Thiago Sousa Santos <thiagoss@embedded.ufcg.edu.br>",
+                "description": "Multiplex audio and video into a MP4 file",
+                "hierarchy": [
+                    "GstMP4Mux",
+                    "GstAggregator",
+                    "GstElement",
+                    "GstObject",
+                    "GInitiallyUnowned",
+                    "GObject"
+                ],
+                "interfaces": [
+                    "GstTagSetter",
+                    "GstTagXmpWriter",
+                    "GstPreset"
+                ],
+                "klass": "Codec/Muxer",
+                "long-name": "MP4 Muxer",
+                "pad-templates": {
+                    "audio_%%u": {
+                        "caps": "audio/mpeg:\n    mpegversion: 1\n          layer: [ 1, 3 ]\n       channels: [ 1, 2 ]\n           rate: [ 1, 2147483647 ]\naudio/mpeg:\n    mpegversion: 4\n  stream-format: raw\n       channels: [ 1, 8 ]\n           rate: [ 1, 2147483647 ]\naudio/x-ac3:\n       channels: [ 1, 6 ]\n           rate: [ 1, 2147483647 ]\naudio/x-alac:\n       channels: [ 1, 2 ]\n           rate: [ 1, 2147483647 ]\naudio/x-opus:\nchannel-mapping-family: [ 0, 255 ]\n       channels: [ 1, 8 ]\n           rate: [ 1, 2147483647 ]\n",
+                        "direction": "sink",
+                        "presence": "request",
+                        "type": "GstQTMuxPad"
+                    },
+                    "src": {
+                        "caps": "video/quicktime:\n        variant: iso\n",
+                        "direction": "src",
+                        "presence": "always",
+                        "type": "GstAggregatorPad"
+                    },
+                    "subtitle_%%u": {
+                        "caps": "text/x-raw:\n         format: utf8\n",
+                        "direction": "sink",
+                        "presence": "request",
+                        "type": "GstQTMuxPad"
+                    },
+                    "video_%%u": {
+                        "caps": "video/mpeg:\n    mpegversion: 4\n   systemstream: false\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-divx:\n    divxversion: 5\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-h264:\n  stream-format: avc\n      alignment: au\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-h265:\n  stream-format: { (string)hvc1, (string)hev1 }\n      alignment: au\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-mp4-part:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-av1:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\n",
+                        "direction": "sink",
+                        "presence": "request",
+                        "type": "GstQTMuxPad"
+                    }
+                },
+                "properties": {
+                    "dts-method": {
+                        "blurb": "Method to determine DTS time (DEPRECATED)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "reorder (1)",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "GstQTMuxDtsMethods",
+                        "writable": true
+                    },
+                    "faststart": {
+                        "blurb": "If the file should be formatted for faststart (headers first)",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "false",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "faststart-file": {
+                        "blurb": "File that will be used temporarily to store data from the stream when creating a faststart file. If null a filepath will be created automatically",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "NULL",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gchararray",
+                        "writable": true
+                    },
+                    "force-chunks": {
+                        "blurb": "Force multiple chunks to be created even for single-stream files",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "false",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "force-create-timecode-trak": {
+                        "blurb": "Create a timecode trak even in unsupported flavors",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "false",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "fragment-duration": {
+                        "blurb": "Fragment durations in ms (produce a fragmented file if > 0)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "0",
+                        "max": "-1",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint",
+                        "writable": true
+                    },
+                    "interleave-bytes": {
+                        "blurb": "Interleave between streams in bytes",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "0",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": true
+                    },
+                    "interleave-time": {
+                        "blurb": "Interleave between streams in nanoseconds",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "250000000",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": true
+                    },
+                    "max-raw-audio-drift": {
+                        "blurb": "Maximum allowed drift of raw audio samples vs. timestamps in nanoseconds",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "40000000",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": true
+                    },
+                    "moov-recovery-file": {
+                        "blurb": "File to be used to store data for moov atom making movie file recovery possible in case of a crash during muxing. Null for disabled. (Experimental)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "NULL",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gchararray",
+                        "writable": true
+                    },
+                    "movie-timescale": {
+                        "blurb": "Timescale to use in the movie (units per second, 0 == default)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "0",
+                        "max": "-1",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint",
+                        "writable": true
+                    },
+                    "presentation-time": {
+                        "blurb": "Calculate and include presentation/composition time (in addition to decoding time)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "true",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "reserved-bytes-per-sec": {
+                        "blurb": "Multiplier for converting reserved-max-duration into bytes of header to reserve, per second, per track",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "550",
+                        "max": "10000",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint",
+                        "writable": true
+                    },
+                    "reserved-duration-remaining": {
+                        "blurb": "Reports the approximate amount of remaining moov header space reserved using reserved-max-duration",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "18446744073709551615",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": false
+                    },
+                    "reserved-max-duration": {
+                        "blurb": "When set to a value > 0, reserves space for index tables at the beginning of the file.",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "18446744073709551615",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": true
+                    },
+                    "reserved-moov-update-period": {
+                        "blurb": "When used with reserved-max-duration, periodically updates the index tables with information muxed so far.",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "18446744073709551615",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": true
+                    },
+                    "reserved-prefill": {
+                        "blurb": "Prefill samples table of reserved duration",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "false",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "start-gap-threshold": {
+                        "blurb": "Threshold for creating an edit list for gaps at the start in nanoseconds",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "0",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": true
+                    },
+                    "streamable": {
+                        "blurb": "If set to true, the output should be as if it is to be streamed and hence no indexes written or duration written. (DEPRECATED, only valid for fragmented MP4)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "false",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "trak-timescale": {
+                        "blurb": "Timescale to use for the tracks (units per second, 0 is automatic)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "0",
+                        "max": "-1",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint",
+                        "writable": true
+                    }
+                },
+                "rank": "primary"
+            },
+            "qtdemux": {
+                "author": "David Schleef <ds@schleef.org>, Wim Taymans <wim@fluendo.com>",
+                "description": "Demultiplex a QuickTime file into audio and video streams",
+                "hierarchy": [
+                    "GstQTDemux",
+                    "GstElement",
+                    "GstObject",
+                    "GInitiallyUnowned",
+                    "GObject"
+                ],
+                "klass": "Codec/Demuxer",
+                "long-name": "QuickTime demuxer",
+                "pad-templates": {
+                    "audio_%%u": {
+                        "caps": "ANY",
+                        "direction": "src",
+                        "presence": "sometimes"
+                    },
+                    "sink": {
+                        "caps": "video/quicktime:\nvideo/mj2:\naudio/x-m4a:\napplication/x-3gp:\n",
+                        "direction": "sink",
+                        "presence": "always"
+                    },
+                    "subtitle_%%u": {
+                        "caps": "ANY",
+                        "direction": "src",
+                        "presence": "sometimes"
+                    },
+                    "video_%%u": {
+                        "caps": "ANY",
+                        "direction": "src",
+                        "presence": "sometimes"
+                    }
+                },
+                "rank": "primary",
+                "signals": {}
+            },
+            "qtmoovrecover": {
+                "author": "Thiago Santos <thiago.sousa.santos@collabora.co.uk>",
+                "description": "Recovers unfinished qtmux files",
+                "hierarchy": [
+                    "GstQTMoovRecover",
+                    "GstPipeline",
+                    "GstBin",
+                    "GstElement",
+                    "GstObject",
+                    "GInitiallyUnowned",
+                    "GObject"
+                ],
+                "interfaces": [
+                    "GstChildProxy"
+                ],
+                "klass": "Util",
+                "long-name": "QT Moov Recover",
+                "properties": {
+                    "broken-input": {
+                        "blurb": "Path to broken input file. (If qtmux was on faststart mode, this file is the faststart file)",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "NULL",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gchararray",
+                        "writable": true
+                    },
+                    "faststart-mode": {
+                        "blurb": "If the broken input is from faststart mode",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "false",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "fixed-output": {
+                        "blurb": "Path to write the fixed file to (used as output)",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "NULL",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gchararray",
+                        "writable": true
+                    },
+                    "recovery-input": {
+                        "blurb": "Path to recovery file (used as input)",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "NULL",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gchararray",
+                        "writable": true
+                    }
+                },
+                "rank": "none"
+            },
+            "qtmux": {
+                "author": "Thiago Sousa Santos <thiagoss@embedded.ufcg.edu.br>",
+                "description": "Multiplex audio and video into a QuickTime file",
+                "hierarchy": [
+                    "GstQTMux",
+                    "GstAggregator",
+                    "GstElement",
+                    "GstObject",
+                    "GInitiallyUnowned",
+                    "GObject"
+                ],
+                "interfaces": [
+                    "GstTagSetter",
+                    "GstTagXmpWriter",
+                    "GstPreset"
+                ],
+                "klass": "Codec/Muxer",
+                "long-name": "QuickTime Muxer",
+                "pad-templates": {
+                    "audio_%%u": {
+                        "caps": "audio/x-raw:\n         format: { S32LE, S32BE, S24LE, S24BE, S16LE, S16BE, S8, U8 }\n         layout: interleaved\n       channels: [ 1, 2 ]\n           rate: [ 1, 2147483647 ]\naudio/x-raw:\n         format: { S32LE, S32BE, S24LE, S24BE, S16LE, S16BE, S8, U8 }\n         layout: interleaved\n   channel-mask: 0x0000000000000000\n       channels: [ 1, 16 ]\n           rate: [ 1, 2147483647 ]\naudio/mpeg:\n    mpegversion: 1\n          layer: [ 1, 3 ]\n       channels: [ 1, 2 ]\n           rate: [ 1, 2147483647 ]\naudio/mpeg:\n    mpegversion: 4\n  stream-format: raw\n       channels: [ 1, 8 ]\n           rate: [ 1, 2147483647 ]\naudio/x-ac3:\n       channels: [ 1, 6 ]\n           rate: [ 1, 2147483647 ]\naudio/x-adpcm:\n         layout: dvi\n    block_align: [ 64, 8096 ]\n       channels: [ 1, 2 ]\n           rate: [ 1, 2147483647 ]\naudio/x-alaw:\n       channels: [ 1, 2 ]\n           rate: [ 1, 2147483647 ]\naudio/x-mulaw:\n       channels: [ 1, 2 ]\n           rate: [ 1, 2147483647 ]\naudio/AMR:\n           rate: 8000\n       channels: [ 1, 2 ]\naudio/AMR-WB:\n           rate: 16000\n       channels: [ 1, 2 ]\naudio/x-alac:\n       channels: [ 1, 2 ]\n           rate: [ 1, 2147483647 ]\naudio/x-opus:\nchannel-mapping-family: [ 0, 255 ]\n       channels: [ 1, 8 ]\n           rate: [ 1, 2147483647 ]\n",
+                        "direction": "sink",
+                        "presence": "request",
+                        "type": "GstQTMuxPad"
+                    },
+                    "caption_%%u": {
+                        "caps": "closedcaption/x-cea-608:\n         format: s334-1a\nclosedcaption/x-cea-708:\n         format: cdp\n",
+                        "direction": "sink",
+                        "presence": "request",
+                        "type": "GstQTMuxPad"
+                    },
+                    "src": {
+                        "caps": "video/quicktime:\n        variant: apple\nvideo/quicktime:\n",
+                        "direction": "src",
+                        "presence": "always",
+                        "type": "GstAggregatorPad"
+                    },
+                    "subtitle_%%u": {
+                        "caps": "text/x-raw:\n         format: utf8\n",
+                        "direction": "sink",
+                        "presence": "request",
+                        "type": "GstQTMuxPad"
+                    },
+                    "video_%%u": {
+                        "caps": "video/x-raw:\n         format: { RGB, UYVY, v210 }\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/mpeg:\n    mpegversion: 4\n   systemstream: false\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-divx:\n    divxversion: 5\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-prores:\n        variant: { (string)standard, (string)lt, (string)hq, (string)proxy, (string)4444, (string)4444xq }\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-cineform:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-h263:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-h264:\n  stream-format: avc\n      alignment: au\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-h265:\n  stream-format: { (string)hvc1, (string)hev1 }\n      alignment: au\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-svq:\n     svqversion: 3\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-dv:\n   systemstream: false\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nimage/jpeg:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nimage/png:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-vp8:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-vp9:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-dirac:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-qt-part:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\nvideo/x-av1:\n          width: [ 16, 2147483647 ]\n         height: [ 16, 2147483647 ]\n",
+                        "direction": "sink",
+                        "presence": "request",
+                        "type": "GstQTMuxPad"
+                    }
+                },
+                "properties": {
+                    "dts-method": {
+                        "blurb": "Method to determine DTS time (DEPRECATED)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "reorder (1)",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "GstQTMuxDtsMethods",
+                        "writable": true
+                    },
+                    "faststart": {
+                        "blurb": "If the file should be formatted for faststart (headers first)",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "false",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "faststart-file": {
+                        "blurb": "File that will be used temporarily to store data from the stream when creating a faststart file. If null a filepath will be created automatically",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "NULL",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gchararray",
+                        "writable": true
+                    },
+                    "force-chunks": {
+                        "blurb": "Force multiple chunks to be created even for single-stream files",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "false",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "force-create-timecode-trak": {
+                        "blurb": "Create a timecode trak even in unsupported flavors",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "false",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "fragment-duration": {
+                        "blurb": "Fragment durations in ms (produce a fragmented file if > 0)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "0",
+                        "max": "-1",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint",
+                        "writable": true
+                    },
+                    "interleave-bytes": {
+                        "blurb": "Interleave between streams in bytes",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "0",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": true
+                    },
+                    "interleave-time": {
+                        "blurb": "Interleave between streams in nanoseconds",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "250000000",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": true
+                    },
+                    "max-raw-audio-drift": {
+                        "blurb": "Maximum allowed drift of raw audio samples vs. timestamps in nanoseconds",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "40000000",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": true
+                    },
+                    "moov-recovery-file": {
+                        "blurb": "File to be used to store data for moov atom making movie file recovery possible in case of a crash during muxing. Null for disabled. (Experimental)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "NULL",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gchararray",
+                        "writable": true
+                    },
+                    "movie-timescale": {
+                        "blurb": "Timescale to use in the movie (units per second, 0 == default)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "0",
+                        "max": "-1",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint",
+                        "writable": true
+                    },
+                    "presentation-time": {
+                        "blurb": "Calculate and include presentation/composition time (in addition to decoding time)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "true",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "reserved-bytes-per-sec": {
+                        "blurb": "Multiplier for converting reserved-max-duration into bytes of header to reserve, per second, per track",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "550",
+                        "max": "10000",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint",
+                        "writable": true
+                    },
+                    "reserved-duration-remaining": {
+                        "blurb": "Reports the approximate amount of remaining moov header space reserved using reserved-max-duration",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "18446744073709551615",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": false
+                    },
+                    "reserved-max-duration": {
+                        "blurb": "When set to a value > 0, reserves space for index tables at the beginning of the file.",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "18446744073709551615",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": true
+                    },
+                    "reserved-moov-update-period": {
+                        "blurb": "When used with reserved-max-duration, periodically updates the index tables with information muxed so far.",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "18446744073709551615",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": true
+                    },
+                    "reserved-prefill": {
+                        "blurb": "Prefill samples table of reserved duration",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "false",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "start-gap-threshold": {
+                        "blurb": "Threshold for creating an edit list for gaps at the start in nanoseconds",
+                        "conditionally-available": false,
+                        "construct": false,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "0",
+                        "max": "18446744073709551615",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint64",
+                        "writable": true
+                    },
+                    "streamable": {
+                        "blurb": "If set to true, the output should be as if it is to be streamed and hence no indexes written or duration written. (DEPRECATED, only valid for fragmented MP4)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "false",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "gboolean",
+                        "writable": true
+                    },
+                    "trak-timescale": {
+                        "blurb": "Timescale to use for the tracks (units per second, 0 is automatic)",
+                        "conditionally-available": false,
+                        "construct": true,
+                        "construct-only": false,
+                        "controllable": false,
+                        "default": "0",
+                        "max": "-1",
+                        "min": "0",
+                        "mutable": "null",
+                        "readable": true,
+                        "type": "guint",
+                        "writable": true
+                    }
+                },
+                "rank": "primary"
+            },
+            "rtpxqtdepay": {
+                "author": "Wim Taymans <wim@fluendo.com>",
+                "description": "Extracts Quicktime audio/video from RTP packets",
+                "hierarchy": [
+                    "GstRtpXQTDepay",
+                    "GstRTPBaseDepayload",
+                    "GstElement",
+                    "GstObject",
+                    "GInitiallyUnowned",
+                    "GObject"
+                ],
+                "klass": "Codec/Depayloader/Network",
+                "long-name": "RTP packet depayloader",
+                "pad-templates": {
+                    "sink": {
+                        "caps": "application/x-rtp:\n        payload: [ 96, 127 ]\n          media: { (string)audio, (string)video }\n     clock-rate: [ 1, 2147483647 ]\n  encoding-name: { (string)X-QT, (string)X-QUICKTIME }\n",
+                        "direction": "sink",
+                        "presence": "always"
+                    },
+                    "src": {
+                        "caps": "ANY",
+                        "direction": "src",
+                        "presence": "always"
+                    }
+                },
+                "properties": {},
+                "rank": "marginal"
+            }
+        },
+        "filename": "gstisomp4",
+        "license": "LGPL",
+        "other-types": {
             "GstQTMuxDtsMethods": {
                 "kind": "enum",
                 "values": [
@@ -8239,13 +9204,13 @@
                 "kind": "enum",
                 "values": [
                     {
-                        "desc": "Dash or Smoothstreaming",
-                        "name": "dash-or-mss",
+                        "desc": "dash-or-mss",
+                        "name": "Dash or Smoothstreaming",
                         "value": "0"
                     },
                     {
-                        "desc": "First MOOV Fragment Then Finalise",
-                        "name": "first-moov-then-finalise",
+                        "desc": "first-moov-then-finalise",
+                        "name": "First MOOV Fragment Then Finalise",
                         "value": "1"
                     }
                 ]
