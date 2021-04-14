@@ -59,7 +59,6 @@
 #include <gst/riff/riff.h>
 #include <gst/pbutils/pbutils.h>
 
-#include "gstisomp4elements.h"
 #include "qtatomparser.h"
 #include "qtdemux_types.h"
 #include "qtdemux_dump.h"
@@ -290,8 +289,6 @@ GST_STATIC_PAD_TEMPLATE ("subtitle_%u",
 
 #define gst_qtdemux_parent_class parent_class
 G_DEFINE_TYPE (GstQTDemux, gst_qtdemux, GST_TYPE_ELEMENT);
-GST_ELEMENT_REGISTER_DEFINE_WITH_CODE (qtdemux, "qtdemux",
-    GST_RANK_PRIMARY, GST_TYPE_QTDEMUX, isomp4_element_init (plugin));
 
 static void gst_qtdemux_dispose (GObject * object);
 static void gst_qtdemux_finalize (GObject * object);
