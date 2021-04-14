@@ -231,9 +231,6 @@ struct _GstQTMux
    * @mux_mode == GST_QT_MUX_MODE_FRAGMENTED */
   GstQTMuxFragmentMode fragment_mode;
 
-  /* whether downstream is seekable */
-  gboolean downstream_seekable;
-
   /* size of header (prefix, atoms (ftyp, possibly moov, mdat header)) */
   guint64 header_size;
   /* accumulated size of raw media data (not including mdat header) */
@@ -263,10 +260,6 @@ struct _GstQTMux
   guint64 current_chunk_size;
   GstClockTime current_chunk_duration;
   guint64 current_chunk_offset;
-
-  /* list of buffers to hold for batching inside a single mdat when downstream
-   * is not seekable */
-  GList *output_buffers;
 
   /* atom helper objects */
   AtomsContext *context;
