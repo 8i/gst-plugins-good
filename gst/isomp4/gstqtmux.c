@@ -127,6 +127,7 @@
 #endif
 
 #include <glib/gstdio.h>
+#include <gio/gio.h>
 
 #include <gst/gst.h>
 #include <gst/base/gstbytereader.h>
@@ -352,6 +353,7 @@ enum
   PROP_TRAK_TIMESCALE,
   PROP_FAST_START,
   PROP_FAST_START_TEMP_FILE,
+  PROP_INIT_FILE,
   PROP_MOOV_RECOV_FILE,
   PROP_FRAGMENT_DURATION,
   PROP_STREAMABLE,
@@ -380,6 +382,7 @@ enum
 #define DEFAULT_DO_CTTS                 TRUE
 #define DEFAULT_FAST_START              FALSE
 #define DEFAULT_FAST_START_TEMP_FILE    NULL
+#define DEFAULT_INIT_FILE               NULL
 #define DEFAULT_MOOV_RECOV_FILE         NULL
 #define DEFAULT_FRAGMENT_DURATION       0
 #define DEFAULT_STREAMABLE              TRUE
@@ -573,6 +576,12 @@ gst_qt_mux_class_init (GstQTMuxClass * klass)
           "File that will be used temporarily to store data from the stream "
           "when creating a faststart file. If null a filepath will be "
           "created automatically", DEFAULT_FAST_START_TEMP_FILE,
+          G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS |
+          GST_PARAM_DOC_SHOW_DEFAULT));
+  g_object_class_install_property (gobject_class, PROP_INIT_FILE,
+      g_param_spec_string ("init-file", "File used to store init segment",
+          "File that will be periodically refreshed with the init segment "
+          "data when in fragmented mode", DEFAULT_INIT_FILE,
           G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS |
           GST_PARAM_DOC_SHOW_DEFAULT));
   g_object_class_install_property (gobject_class, PROP_MOOV_RECOV_FILE,
@@ -902,6 +911,7 @@ gst_qt_mux_finalize (GObject * object)
 
   g_free (qtmux->fast_start_file_path);
   g_free (qtmux->moov_recov_file_path);
+  g_free (qtmux->init_file_path);
 
   atoms_context_free (qtmux->context);
 
@@ -3458,6 +3468,21 @@ gst_qt_mux_start_file (GstQTMux * qtmux)
       /* prepare index if not streamable */
       if (qtmux->mux_mode == GST_QT_MUX_MODE_FRAGMENTED)
         qtmux->mfra = atom_mfra_new (qtmux->context);
+
+      // Preserve init segment
+      if (qtmux->init_file_path && qtmux->fast_start_file_path) {
+        GFile *init_file = NULL;
+        GFile *fast_start_file = NULL;
+        fast_start_file = g_file_new_for_path (qtmux->fast_start_file_path);
+        init_file = g_file_new_for_path (qtmux->init_file_path);
+        if (init_file == NULL) {
+          GST_WARNING_OBJECT (qtmux, "Failed to open init file in %s",
+              qtmux->init_file_path);
+          return GST_FLOW_ERROR;
+        }
+        g_file_copy (fast_start_file, init_file, G_FILE_COPY_OVERWRITE, NULL,
+            NULL, NULL, NULL);
+      }
       break;
   }
 
@@ -6728,6 +6753,9 @@ gst_qt_mux_get_property (GObject * object,
     case PROP_FAST_START_TEMP_FILE:
       g_value_set_string (value, qtmux->fast_start_file_path);
       break;
+    case PROP_INIT_FILE:
+      g_value_set_string (value, qtmux->init_file_path);
+      break;
     case PROP_MOOV_RECOV_FILE:
       g_value_set_string (value, qtmux->moov_recov_file_path);
       break;
@@ -6838,6 +6866,10 @@ gst_qt_mux_set_property (GObject * object,
       if (!qtmux->fast_start_file_path) {
         gst_qt_mux_generate_fast_start_file_path (qtmux);
       }
+      break;
+    case PROP_INIT_FILE:
+      g_free (qtmux->init_file_path);
+      qtmux->init_file_path = g_value_dup_string (value);
       break;
     case PROP_MOOV_RECOV_FILE:
       g_free (qtmux->moov_recov_file_path);
